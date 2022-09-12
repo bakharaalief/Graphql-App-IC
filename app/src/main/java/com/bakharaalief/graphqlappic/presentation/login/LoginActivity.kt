@@ -16,7 +16,6 @@ import com.bakharaalief.graphqlappic.data.userPref.UserModel
 import com.bakharaalief.graphqlappic.databinding.ActivityLoginBinding
 import com.bakharaalief.graphqlappic.presentation.ViewModelFactory
 import com.bakharaalief.graphqlappic.presentation.main.MainActivity
-import com.bakharaalief.graphqlappic.util.Helper
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -90,13 +89,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun getUserPref() {
         loginViewModel.getUserPref().observe(this) { userPref ->
             if (userPref.isUserLogin) {
-                val isExpired = Helper.isAccessExpired(userPref.accessTokenExpired)
-                if (isExpired) Toast.makeText(
-                    this,
-                    "Your session already end, Please Login Again :)",
-                    Toast.LENGTH_SHORT
-                ).show()
-                else toMain()
+                toMain()
+//                val isExpired = Helper.isAccessExpired(userPref.accessTokenExpired)
+//
+//                val stringToDate = Helper.stringToDate(userPref.accessTokenExpired, "yyyy-MM-dd'T'HH:mm:ss")
+//
+//                Log.d("dateLogin", "$stringToDate")
+//                Log.d("dateLogin", "${Date()}")
+//                Log.d("dateLogin", "$isExpired")
+//
+//                if (isExpired) Toast.makeText(
+//                    this,
+//                    "Your session already end, Please Login Again :)",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+//                else toMain()
             } else {
                 Toast.makeText(
                     this,

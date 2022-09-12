@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id("com.apollographql.apollo3").version("3.6.0")
 }
 
 android {
@@ -75,4 +76,11 @@ dependencies {
 
     //datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    //apollo
+    implementation "com.apollographql.apollo3:apollo-runtime:3.6.0"
+}
+
+apollo {
+    packageName.set("com.bakharaalief.app")
 }
