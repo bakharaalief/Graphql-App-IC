@@ -28,6 +28,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun logOut() {
+        dataStore.edit { preferences ->
+            preferences[ACCESS_TOKEN] = ""
+            preferences[ACCESS_TOKEN_EXPIRED] = ""
+            preferences[IS_USER_LOGIN] = false
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null
