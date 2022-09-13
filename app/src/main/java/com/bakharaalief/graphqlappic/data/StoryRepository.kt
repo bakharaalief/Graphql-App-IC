@@ -23,7 +23,7 @@ class StoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                val stories = response.data?.stories?.edges?.filterNotNull() ?: emptyList()
+                val stories = response.data?.stories?.edges ?: emptyList()
                 emit(Resource.Success(stories))
             }
         } catch (e: Exception) {

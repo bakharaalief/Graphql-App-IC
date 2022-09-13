@@ -16,6 +16,7 @@ import com.bakharaalief.graphqlappic.data.userPref.UserModel
 import com.bakharaalief.graphqlappic.databinding.ActivityLoginBinding
 import com.bakharaalief.graphqlappic.presentation.ViewModelFactory
 import com.bakharaalief.graphqlappic.presentation.main.MainActivity
+import com.bakharaalief.graphqlappic.util.Helper
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -67,6 +68,31 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     val userModel = UserModel(
                         response.data.accessToken,
                         response.data.accessTokenExpiresAt,
+                        response.data.refreshToken,
+                        response.data.refreshTokenExpiresAt,
+                        true
+                    )
+                    loginViewModel.saveUser(userModel)
+                    toMain()
+                }
+                is Resource.Error -> {
+                    Toast.makeText(this, response.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun refreshToken(token: String) {
+        loginViewModel.refreshToken(token).observe(this) { response ->
+            when (response) {
+                is Resource.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                is Resource.Success -> {
+                    Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_SHORT).show()
+                    val userModel = UserModel(
+                        response.data.accessToken,
+                        response.data.accessTokenExpiresAt,
+                        response.data.refreshToken,
+                        response.data.refreshTokenExpiresAt,
                         true
                     )
                     loginViewModel.saveUser(userModel)
@@ -89,21 +115,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun getUserPref() {
         loginViewModel.getUserPref().observe(this) { userPref ->
             if (userPref.isUserLogin) {
-                toMain()
-//                val isExpired = Helper.isAccessExpired(userPref.accessTokenExpired)
-//
-//                val stringToDate = Helper.stringToDate(userPref.accessTokenExpired, "yyyy-MM-dd'T'HH:mm:ss")
-//
-//                Log.d("dateLogin", "$stringToDate")
-//                Log.d("dateLogin", "${Date()}")
-//                Log.d("dateLogin", "$isExpired")
-//
-//                if (isExpired) Toast.makeText(
-//                    this,
-//                    "Your session already end, Please Login Again :)",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                else toMain()
+                val isExpired = Helper.isAccessExpired(userPref.accessTokenExpired)
+                if (isExpired) refreshToken(userPref.refreshToken)
+                else toMain()
             } else {
                 Toast.makeText(
                     this,

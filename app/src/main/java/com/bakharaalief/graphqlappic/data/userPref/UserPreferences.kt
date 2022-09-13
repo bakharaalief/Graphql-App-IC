@@ -15,6 +15,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             UserModel(
                 preferences[ACCESS_TOKEN] ?: "",
                 preferences[ACCESS_TOKEN_EXPIRED] ?: "",
+                preferences[REFRESH_TOKEN] ?: "",
+                preferences[REFRESH_TOKEN_EXPIRED] ?: "",
                 preferences[IS_USER_LOGIN] ?: false
             )
         }
@@ -24,14 +26,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         dataStore.edit { preferences ->
             preferences[ACCESS_TOKEN] = user.accessToken
             preferences[ACCESS_TOKEN_EXPIRED] = user.accessTokenExpired
+            preferences[REFRESH_TOKEN] = user.refreshToken
+            preferences[REFRESH_TOKEN_EXPIRED] = user.refreshTokenExpired
             preferences[IS_USER_LOGIN] = user.isUserLogin
         }
     }
 
     suspend fun logOut() {
         dataStore.edit { preferences ->
-            preferences[ACCESS_TOKEN] = ""
-            preferences[ACCESS_TOKEN_EXPIRED] = ""
             preferences[IS_USER_LOGIN] = false
         }
     }
@@ -42,6 +44,8 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
         private val ACCESS_TOKEN = stringPreferencesKey("access_token")
         private val ACCESS_TOKEN_EXPIRED = stringPreferencesKey("access_token_expired")
+        private val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+        private val REFRESH_TOKEN_EXPIRED = stringPreferencesKey("refresh_token_expired")
         private val IS_USER_LOGIN = booleanPreferencesKey("is_user_login")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
