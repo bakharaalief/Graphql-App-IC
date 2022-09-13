@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bakharaalief.app.StoriesQuery
+import com.bakharaalief.graphqlappic.R
 import com.bakharaalief.graphqlappic.databinding.ItemStoriesBinding
 import com.bakharaalief.graphqlappic.util.Helper.toNowDate
 
@@ -17,8 +18,12 @@ class StoryAdapter : ListAdapter<StoriesQuery.Edge, StoryAdapter.MyViewHolder>(D
         fun bind(storiesQuery: StoriesQuery.Edge) {
             itemStoriesBinding.titleItem.text = storiesQuery.title
             itemStoriesBinding.publishedItem.text = storiesQuery.publishedAt.toString().toNowDate()
-            itemStoriesBinding.likeItem.text = storiesQuery.likeCount.toString()
-            itemStoriesBinding.commentItem.text = storiesQuery.commentCount.toString()
+            itemStoriesBinding.likeIcon.setImageResource(
+                if (storiesQuery.hasBeenLiked) R.drawable.ic_baseline_star_24 else R.drawable.ic_baseline_star_outline_24
+            )
+            itemStoriesBinding.bookmarkIcon.setImageResource(
+                if (storiesQuery.hasBeenBookmarked) R.drawable.ic_baseline_bookmark_24 else R.drawable.ic_baseline_bookmark_border_24
+            )
         }
     }
 
