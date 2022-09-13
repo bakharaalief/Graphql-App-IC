@@ -5,16 +5,18 @@ import androidx.lifecycle.liveData
 import com.apollographql.apollo3.ApolloClient
 import com.bakharaalief.app.StoriesQuery
 import com.bakharaalief.graphqlappic.data.network.apollo.ApolloConfig
+import com.bakharaalief.graphqlappic.domain.model.StoryModel
+import com.bakharaalief.graphqlappic.domain.repository.IStoryRepository
+import com.bakharaalief.graphqlappic.util.DataMapper.toStoryModel
 
-class StoryRepository {
-
+class StoryRepository : IStoryRepository {
     private lateinit var apolloClient: ApolloClient
 
-    fun setApolloClient(token: String) {
+    override fun setApolloClient(token: String) {
         apolloClient = ApolloConfig.getApiService(token)
     }
 
-    fun getStoriesData(): LiveData<Resource<List<StoriesQuery.Edge>>> = liveData {
+    override fun getStoriesData(): LiveData<Resource<List<StoryModel>>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -23,8 +25,8 @@ class StoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                val stories = response.data?.stories?.edges ?: emptyList()
-                emit(Resource.Success(stories))
+                val stories = response.data?.stories?.edges
+                emit(Resource.Success(stories.toStoryModel()))
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
