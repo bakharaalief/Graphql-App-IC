@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getUserPref() {
         mainViewModel.getUserPref().observe(this) { userModel ->
-            getData(userModel.accessToken)
+            getData(userModel.refreshToken)
         }
     }
 
