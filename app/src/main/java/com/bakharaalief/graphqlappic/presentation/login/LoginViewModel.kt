@@ -15,6 +15,8 @@ class LoginViewModel(
 
     fun login(username: String, password: String) = authRepository.getData(username, password)
 
+    fun refreshToken(token: String) = authRepository.getRefresh(token)
+
     fun getUserPref() = userPreferences.getUser().asLiveData()
 
     fun saveUser(userModel: UserModel) {
