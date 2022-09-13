@@ -15,4 +15,15 @@ object Helper {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
         return simpleDateFormat.parse(aDate) ?: Date()
     }
+
+    fun String.toNowDate(): String {
+        val date: Date = stringToDate(this)
+        val dateNow = date.time.plus(25200000)
+        return dateToString(Date(dateNow))
+    }
+
+    private fun dateToString(date: Date): String {
+        val simpleDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return simpleDateFormat.format(date)
+    }
 }
