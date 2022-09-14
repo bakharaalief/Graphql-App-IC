@@ -9,11 +9,11 @@ interface IStoryRepository {
 
     fun getStoriesData(): LiveData<Resource<List<StoryModel>>>
 
-    fun likeStory(id: String): LiveData<Resource<Boolean>>
+    fun likeStory(id: String): LiveData<Resource<String>>
 
-    fun unLikeStory(id: String): LiveData<Resource<Boolean>>
+    fun unLikeStory(id: String): LiveData<Resource<String>>
 
-    fun bookmarkStory(id: String): LiveData<Resource<Boolean>>
+    fun bookmarkStory(id: String): LiveData<Resource<String>>
 
-    fun unBookmarkStory(id: String): LiveData<Resource<Boolean>>
+    fun unBookmarkStory(id: String): LiveData<Resource<String>>
 }

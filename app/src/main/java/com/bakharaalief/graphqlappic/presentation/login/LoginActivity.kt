@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             when (response) {
                 is Resource.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                 is Resource.Success -> {
-                    Toast.makeText(this, "Berhasil Login", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Success Login :)", Toast.LENGTH_SHORT).show()
                     val userModel = UserModel(
                         response.data.accessToken,
                         response.data.accessTokenExpiresAt,
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             when (response) {
                 is Resource.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                 is Resource.Success -> {
-                    Toast.makeText(this, "Berhasil Masuk", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Success Login :)", Toast.LENGTH_SHORT).show()
                     val userModel = UserModel(
                         response.data.accessToken,
                         response.data.accessTokenExpiresAt,
