@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bakharaalief.graphqlappic.R
 import com.bakharaalief.graphqlappic.data.Resource
 import com.bakharaalief.graphqlappic.databinding.ActivityMainBinding
+import com.bakharaalief.graphqlappic.domain.model.StoryModel
 import com.bakharaalief.graphqlappic.presentation.ViewModelFactory
 import com.bakharaalief.graphqlappic.presentation.login.LoginActivity
 
@@ -43,9 +44,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setUpRv() {
-        adapter = StoryAdapter()
+        adapter = StoryAdapter(::onClickLikeBookmark)
         binding.storiesRv.adapter = adapter
         binding.storiesRv.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun onClickLikeBookmark(story: StoryModel, position: Int, type: String) {
+        if (type == StoryAdapter.LIKE) likeStory(story, position)
+        else bookmarkStory(story, position)
+    }
+
+    private fun likeStory(story: StoryModel, position: Int) {
+        mainViewModel.likeStory(story.id, story.isLiked).observe(this) { response ->
+            when (response) {
+                is Resource.Loading -> Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
+                is Resource.Success -> {
+                    adapter.updateLike(position)
+                    Toast.makeText(this, "Success Like", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun bookmarkStory(story: StoryModel, position: Int) {
+        mainViewModel.bookmarkStory(story.id, story.isBookmarked).observe(this) { response ->
+            when (response) {
+                is Resource.Loading -> Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
+                is Resource.Success -> {
+                    adapter.updateBookmark(position)
+                    Toast.makeText(this, "Success Bookmark", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Error -> {
+                    Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setUpOnClick() {

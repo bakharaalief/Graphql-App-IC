@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DiffUtil
 data class StoryModel(
     val id: String,
     val title: String,
-    val isLiked: Boolean,
-    val isBookmarked: Boolean,
+    var isLiked: Boolean,
+    var isBookmarked: Boolean,
     val publishedAt: String
 )
 
