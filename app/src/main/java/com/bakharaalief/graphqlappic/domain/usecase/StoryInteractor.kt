@@ -12,9 +12,9 @@ class StoryInteractor(private val storyRepository: IStoryRepository) : StoryUseC
     override fun getStoriesData(): LiveData<Resource<List<StoryModel>>> =
         storyRepository.getStoriesData()
 
-    override fun likeStory(id: String, isLike: Boolean): LiveData<Resource<Boolean>> =
+    override fun likeStory(id: String, isLike: Boolean): LiveData<Resource<String>> =
         if (isLike) storyRepository.unLikeStory(id) else storyRepository.likeStory(id)
 
-    override fun bookmarkStory(id: String, isBookmark: Boolean): LiveData<Resource<Boolean>> =
+    override fun bookmarkStory(id: String, isBookmark: Boolean): LiveData<Resource<String>> =
         if (isBookmark) storyRepository.unBookmarkStory(id) else storyRepository.bookmarkStory(id)
 }

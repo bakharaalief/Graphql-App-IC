@@ -33,7 +33,7 @@ class StoryRepository : IStoryRepository {
         }
     }
 
-    override fun likeStory(id: String): LiveData<Resource<Boolean>> = liveData {
+    override fun likeStory(id: String): LiveData<Resource<String>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -41,14 +41,14 @@ class StoryRepository : IStoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                emit(Resource.Success(true))
+                emit(Resource.Success("Success Like"))
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
     }
 
-    override fun unLikeStory(id: String): LiveData<Resource<Boolean>> = liveData {
+    override fun unLikeStory(id: String): LiveData<Resource<String>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -56,14 +56,14 @@ class StoryRepository : IStoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                emit(Resource.Success(true))
+                emit(Resource.Success("Success Unlike"))
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
     }
 
-    override fun bookmarkStory(id: String): LiveData<Resource<Boolean>> = liveData {
+    override fun bookmarkStory(id: String): LiveData<Resource<String>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -71,14 +71,14 @@ class StoryRepository : IStoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                emit(Resource.Success(true))
+                emit(Resource.Success("Success Bookmark"))
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
     }
 
-    override fun unBookmarkStory(id: String): LiveData<Resource<Boolean>> = liveData {
+    override fun unBookmarkStory(id: String): LiveData<Resource<String>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -86,7 +86,7 @@ class StoryRepository : IStoryRepository {
             if (response.errors?.isNotEmpty() == true) {
                 emit(Resource.Error(response.errors?.get(0)?.message ?: "error"))
             } else {
-                emit(Resource.Success(true))
+                emit(Resource.Success("Success Unbookmark"))
             }
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))

@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 is Resource.Loading -> Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
                 is Resource.Success -> {
                     adapter.updateLike(position)
-                    Toast.makeText(this, "Success Like", Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Error -> {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
@@ -75,7 +74,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 is Resource.Loading -> Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show()
                 is Resource.Success -> {
                     adapter.updateBookmark(position)
-                    Toast.makeText(this, "Success Bookmark", Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Error -> {
                     Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
