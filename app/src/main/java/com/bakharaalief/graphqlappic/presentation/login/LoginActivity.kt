@@ -82,28 +82,28 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun refreshToken(token: String) {
-        loginViewModel.refreshToken(token).observe(this) { response ->
-            when (response) {
-                is Resource.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                is Resource.Success -> {
-                    Toast.makeText(this, "Success Login :)", Toast.LENGTH_SHORT).show()
-                    val userModel = UserModel(
-                        response.data.accessToken,
-                        response.data.accessTokenExpiresAt,
-                        response.data.refreshToken,
-                        response.data.refreshTokenExpiresAt,
-                        true
-                    )
-                    loginViewModel.saveUser(userModel)
-                    toMain()
-                }
-                is Resource.Error -> {
-                    Toast.makeText(this, response.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+//    private fun refreshToken(token: String) {
+//        loginViewModel.refreshToken(token).observe(this) { response ->
+//            when (response) {
+//                is Resource.Loading -> Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+//                is Resource.Success -> {
+//                    Toast.makeText(this, "Success Login :)", Toast.LENGTH_SHORT).show()
+//                    val userModel = UserModel(
+//                        response.data.accessToken,
+//                        response.data.accessTokenExpiresAt,
+//                        response.data.refreshToken,
+//                        response.data.refreshTokenExpiresAt,
+//                        true
+//                    )
+//                    loginViewModel.saveUser(userModel)
+//                    toMain()
+//                }
+//                is Resource.Error -> {
+//                    Toast.makeText(this, response.error, Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//    }
 
     private fun toMain() {
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -116,7 +116,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         loginViewModel.getUserPref().observe(this) { userPref ->
             if (userPref.isUserLogin) {
                 val isExpired = Helper.isAccessExpired(userPref.accessTokenExpired)
-                if (isExpired) refreshToken(userPref.refreshToken)
+                if (isExpired) Toast.makeText(
+                    this,
+                    "Please Login Again :)",
+                    Toast.LENGTH_SHORT
+                ).show()
                 else toMain()
             } else {
                 Toast.makeText(
