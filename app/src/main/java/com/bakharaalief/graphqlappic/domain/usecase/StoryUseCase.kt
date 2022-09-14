@@ -7,5 +7,9 @@ import com.bakharaalief.graphqlappic.domain.model.StoryModel
 interface StoryUseCase {
     fun setApolloClient(token: String)
 
-    fun getStoriesData() : LiveData<Resource<List<StoryModel>>>
+    fun getStoriesData(): LiveData<Resource<List<StoryModel>>>
+
+    fun likeStory(id: String, isLike: Boolean): LiveData<Resource<Boolean>>
+
+    fun bookmarkStory(id: String, isBookmark: Boolean): LiveData<Resource<Boolean>>
 }

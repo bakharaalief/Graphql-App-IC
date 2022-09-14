@@ -23,4 +23,8 @@ class MainViewModel(
     fun setToken(token: String) = storyUseCase.setApolloClient(token)
 
     fun getStories() = storyUseCase.getStoriesData()
+
+    fun likeStory(id: String, isLike: Boolean) = storyUseCase.likeStory(id, isLike)
+
+    fun bookmarkStory(id: String, isBookmark: Boolean) = storyUseCase.bookmarkStory(id, isBookmark)
 }
